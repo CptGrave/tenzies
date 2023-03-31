@@ -1,38 +1,201 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* -------------------- Resets --------------------- */
+body, form, fieldset, ol, ul, li, h1, h2, h3, h4, h5, h6, p {
+  margin:0;
+  padding:0;
   }
+  img {
+  border:0; /* kills Gecko bug when img's are placed inside links */
+  vertical-align:bottom; /* set vertical align to bottom for IE */
+  }
+  /* ------------------- Defaults ------------------- */
+  html {
+  height:100%; 
+  overflow:auto; /* triggers 100% height in Opera 9.5 */
+  overflow-y:scroll; /* creates a horizontal scrollbar, for a more consistent look & feel */
+  }
+  body {
+  height:100%; /* helps make height 100% */
+  font:100%/1.5 Arial, Helvetica, sans-serif; /* 100% = 16px, 93.75% = 15px, 87.5% = 14px, 81.25% = 13px, 75% = 12px - font-size in % prevents IE's resize bug */
+  background:#FDFDFD;
+  color:#333;
+  }
+  /* ------------------ Typography ------------------- */
+  h1, h2, h3, h4, h5, h6, p {
+  margin:0 0 1em;
+  }
+  p, ul, ol {
+  font-size:1em;
+  }
+  ul {
+  margin:0 0 1em 25px;
+  list-style:none;
+  }
+  h1 {font-size:1.6em;}
+  h2 {font-size:1.5em;}
+  h3 {font-size:1.4em;}
+  h4 {font-size:1.3em;}
+  h5 {font-size:1.2em;}
+  h6 {font-size:1.1em;}
+  /* -------------------- Forms ---------------------- */
+  fieldset {
+  border:none;
+  }
+  form :focus {
+  outline:0; /* removes Safari's blue border */
+  }  
+  input, select, textarea {
+  font-size:1em;
+  font-family:Arial, Helvetica, sans-serif;
+  }
+  label {
+  cursor:pointer;
+  vertical-align:middle;
+  }
+  input {
+  vertical-align:middle;
+  }
+  textarea { 
+  overflow:auto; /* removes scrollbar from IE when none is needed */
+  }	
+  /* -------------------- Layout --------------------- */
+  #wrap {
+  margin:0 auto; /* centers layout */
+  min-height:100%; /* height 100% in all modern browsers */
+  }
+  #head {
+  }
+  #nav {
+  }
+  #content {
+  }
+  #left {
+  float:left;
+  }
+  #foot {
+  clear:both;
+  }
+  /* ------------------- Links ---------------------- */
+  a {
+  text-decoration:underline;
+  color:#000;
+  outline:0; /* removes dotted border */
+  }
+  a:visited {
+  color:#999;
+  }
+  a:hover, a:focus, a:active {
+  text-decoration:none;
+  /* add-custom:outline-rule-here; */
+  }
+  /* --------------------- Menus -------------------- */
+  /* Main Menu */
+  #nav {
+  }
+  #nav li {
+  }
+  #nav a {
+  text-decoration:none;
+  }
+  #nav a:hover, #nav a:focus, #nav a:active {
+  }
+  /* Foot Menu */
+  #foot ul {
+  }
+  #foot li {
+  }
+  #foot a {
+  text-decoration:none;
+  }
+  #foot a:hover, #foot a:focus, #foot a:active {
+  }
+  /* ---------------- Global Classes --------------- */
+  .clear {
+  clear:both;
+  line-height:0;
+  height:0;
+  font-size:0;
+  }
+  .clearfix:after {
+  content:" "; 
+  display:block; 
+  height:0;
+  font-size:0; 
+  clear:both; 
+  visibility:hidden;
+  }
+  .clearfix {display:inline-block;}
+  /* mac hide \*/
+  * html .clearfix {height:1%;}
+  .clearfix {display:block;}
+  /* End hide */
+  /* ------------------- Content ------------------- */
+
+  * {
+    box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  margin: 0;
+  background-color: #0B2434;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Karla', sans-serif;
+}
+
+main {
+  background-color: #F5F5F5;
+  height: 400px;
+  max-width: 800px;
+  border-radius: 5px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.container {
+  display: grid;
+  grid-template: auto auto / repeat(5, 1fr);
+  gap: 20px;
+}
+
+.die {
+  height: 4rem;
+  width: 4rem;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: white;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 4rem; 
+  
+}
+
+.die-num {
+  font-size: 2rem;
+}
+
+.roll-button {
+  height: 50px;
+  width: 100px;
+  border: none;
+  border-radius: 6px;
+  background-color: #5035FF;
   color: white;
+  font-size: 1.2rem;
+  font-family: 'Karla', sans-serif;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.roll-button:focus {
+  outline: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.roll-button:active {
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
