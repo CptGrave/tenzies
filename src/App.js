@@ -2,42 +2,39 @@ import React from 'react';
 import './App.css';
 import Die from './components/Die'
 import { nanoid } from 'nanoid';
+import Confetti from 'react-confetti'
 
 function App() {
 
-/**
- * Challenge: Update the `rollDice` function to not just roll
- * all new dice, but instead to look through the existing dice
- * to NOT role any that are being `held`.
- * 
- * Hint: this will look relatively similiar to the `holdDice`
- * function below. When creating new dice, remember to use
- * `id: nanoid()` so any new dice have an `id` as well.
- */
-
   const [diceArray, setDiceArray] = React.useState(allNewDice())
-  
+
+  const [tenzies, setTenzies] = React.useState(false)
+
+  function createDie() {
+    return { 
+      value: Math.ceil(Math.random() * 6),
+      isHeld:false,
+      id:nanoid()
+    }
+  }
+
   function allNewDice() {
     const newDice = []
     for (let i = 0; i < 10; i++) {
-        newDice.push({
-          value: Math.ceil(Math.random() * 6),
-          isHeld:false,
-          id:nanoid()
-        })
+        newDice.push(createDie())
     }
     return newDice
 }
 
-  const dieElements = diceArray.map(elem => <Die key={elem.id} value={elem.value} isHeld={elem.isHeld} holdDice={()=>{holdDice(elem.id)}}/>)
-  
   function rollDice() {
-    setDiceArray(oldArray => oldArray.map(die => {
-      return die.isHeld === true ? {...die} : { 
-        value: Math.ceil(Math.random() * 6),
-        isHeld:false,
-        id:nanoid()}
-    }))
+    if(tenzies) {
+      setDiceArray(allNewDice)
+      setTenzies(false)
+    } else {
+      setDiceArray(oldArray => oldArray.map(die => {
+        return die.isHeld === true ? {...die} : createDie()
+      }))
+    }
   }
 
   function holdDice(id) {
@@ -46,14 +43,26 @@ function App() {
     }))
   }
 
+  React.useEffect(() => {
+    const allHeld = diceArray.every(dice => dice.isHeld)
+    const firstVal = diceArray[0].value
+    const allSameValues = diceArray.every(dice => dice.value === firstVal)
+    if (allHeld && allSameValues) {
+      setTenzies(true)
+    }
+  },[diceArray]);
+
+  const dieElements = diceArray.map(elem => <Die key={elem.id} value={elem.value} isHeld={elem.isHeld} holdDice={()=>{holdDice(elem.id)}}/>)
+
   return (
     <main>
       <h1 className="title">Tenzies</h1>
-        <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+        <p className="instructions">{tenzies ? "Congratulations, you won!" : "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."}</p>
       <div className="container">
         {dieElements}
       </div>
-      <button className="roll-button" onClick={rollDice}>Roll</button>
+      <button className="roll-button" onClick={rollDice}>{tenzies ? "New Game"  : "Roll"}</button>
+      {tenzies && <Confetti /> }
     </main>
   );
 }
