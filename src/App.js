@@ -6,6 +6,12 @@ import Confetti from 'react-confetti'
 
 function App() {
 
+ /*  
+-put real dice numbers on dices
+-track rolls tries 
+-track time took to win 
+-save best time to localS */
+
   const [diceArray, setDiceArray] = React.useState(allNewDice())
 
   const [tenzies, setTenzies] = React.useState(false)
