@@ -7,14 +7,14 @@ import Confetti from 'react-confetti'
 function App() {
 
  /*  
--put real dice numbers on dices
--track rolls tries 
 -track time took to win 
 -save best time to localS */
 
   const [diceArray, setDiceArray] = React.useState(allNewDice())
 
   const [tenzies, setTenzies] = React.useState(false)
+
+  const [tries,setTries] = React.useState(0)
 
   function createDie() {
     return { 
@@ -36,10 +36,14 @@ function App() {
     if(tenzies) {
       setDiceArray(allNewDice)
       setTenzies(false)
+      setTries(0)
     } else {
       setDiceArray(oldArray => oldArray.map(die => {
         return die.isHeld === true ? {...die} : createDie()
       }))
+    }
+    if(!tenzies) {
+      setTries(oldTries => oldTries+=1)
     }
   }
 
@@ -62,13 +66,14 @@ function App() {
 
   return (
     <main>
-      <h1 className="title">Tenzies</h1>
+      {tenzies && <Confetti /> }
+      <h1 className="title">{tries === 0 ? "Tenzies" : `Your rolls ${tries}`}</h1>
         <p className="instructions">{tenzies ? "Congratulations, you won!" : "Roll until all dice are the same. Click each die to freeze it at its current value between rolls."}</p>
       <div className="container">
         {dieElements}
       </div>
       <button className="roll-button" onClick={rollDice}>{tenzies ? "New Game"  : "Roll"}</button>
-      {tenzies && <Confetti /> }
+      
     </main>
   );
 }
